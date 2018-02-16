@@ -3,6 +3,8 @@ import { Button, View, TextInput, Platform } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import { StyledTextInput } from '../TextInput';
+
 import styles from './styles';
 
 class CreateLink extends Component {
@@ -29,14 +31,17 @@ class CreateLink extends Component {
     });
   }
 
-  _createLink = async () =>
+  _createLink = async () => {
     await this.props.createLinkMutation({
       variables: {
         ...this.state,
       },
     });
 
-  _maybeRenderButton() {
+    this.props.navigation.goBack(null);
+  };
+
+  _renderAndroidButton() {
     if (Platform.OS === 'ios') {
       return;
     }
@@ -47,19 +52,15 @@ class CreateLink extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
+        <StyledTextInput
           onChangeText={description => this.setState({ description })}
           onSubmitEditing={() => this._urlInput.focus()}
           placeholder="A description for the link"
           returnKeyType="next"
-          style={styles.inputField}
-          underlineColorAndroid="#BBB"
-          selectionColor={styles.$orange}
           value={this.state.description}
         />
-        <TextInput
+        <StyledTextInput
           autoCapitalize="none"
-          autoCorrect={false}
           keyboardType="url"
           onChangeText={url => this.setState({ url })}
           onSubmitEditing={this._createLink}
@@ -68,13 +69,10 @@ class CreateLink extends Component {
             this._urlInput = ref;
           }}
           returnKeyType="done"
-          style={[styles.inputField, styles.lastInputField]}
-          underlineColorAndroid="#BBB"
-          selectionColor={styles.$orange}
           value={this.state.url}
         />
 
-        {this._maybeRenderButton()}
+        {this._renderAndroidButton()}
       </View>
     );
   }
