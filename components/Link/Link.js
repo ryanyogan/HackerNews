@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
+
+import styles from './styles';
 
 class Link extends Component {
   _voteForLink = async () => {
@@ -9,10 +11,11 @@ class Link extends Component {
 
   render() {
     return (
-      <Touchable>
-        <Text>
-          {this.props.link.description} ({this.props.link.url})
-        </Text>
+      <Touchable style={styles.container}>
+        <View>
+          <Text style={styles.description}>{this.props.link.description}</Text>
+          <Text>{this.props.link.url}</Text>
+        </View>
       </Touchable>
     );
   }
