@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Link } from '../Link';
 import { HeaderActions } from '../Header';
+
 import styles from './styles';
 
 class LinkList extends Component {
@@ -30,7 +31,7 @@ class LinkList extends Component {
     if (this.props.allLinksQuery && this.props.allLinksQuery.loading) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color={styles.loaderColor} />
           <Text style={styles.loadingText}>Loading links...</Text>
         </View>
       );

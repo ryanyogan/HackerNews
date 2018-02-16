@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import { Button, View, TextInput } from 'react-native';
+import { Button, View, TextInput, Platform } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import styles from './styles';
 
 class CreateLink extends Component {
+  static navigationOptions = props => {
+    const { params } = props.navigation.state;
+    const onDonePress = params ? params.onDonePress : () => {};
+
+    return {
+      title: 'New Link',
+      headerRight: Platform.OS === 'ios' && (
+        <Button color="#FFF" title="Done" onPress={onDonePress} />
+      ),
+    };
+  };
+
   state = {
     description: '',
     url: '',
   };
+
+  componentWillMount() {
+    this.props.navigation.setParams({
+      onDonePress: this._createLink,
+    });
+  }
 
   _createLink = async () =>
     await this.props.createLinkMutation({
@@ -17,6 +35,14 @@ class CreateLink extends Component {
         ...this.state,
       },
     });
+
+  _maybeRenderButton() {
+    if (Platform.OS === 'ios') {
+      return;
+    }
+
+    return <Button color="#BBB" title="Submit" onPress={this._createLink} />;
+  }
 
   render() {
     return (
@@ -27,10 +53,13 @@ class CreateLink extends Component {
           placeholder="A description for the link"
           returnKeyType="next"
           style={styles.inputField}
+          underlineColorAndroid="#BBB"
+          selectionColor={styles.$orange}
           value={this.state.description}
         />
         <TextInput
           autoCapitalize="none"
+          autoCorrect={false}
           keyboardType="url"
           onChangeText={url => this.setState({ url })}
           onSubmitEditing={this._createLink}
@@ -39,10 +68,13 @@ class CreateLink extends Component {
             this._urlInput = ref;
           }}
           returnKeyType="done"
-          style={styles.inputField}
+          style={[styles.inputField, styles.lastInputField]}
+          underlineColorAndroid="#BBB"
+          selectionColor={styles.$orange}
           value={this.state.url}
         />
-        <Button title="Submit" onPress={this._createLink} />
+
+        {this._maybeRenderButton()}
       </View>
     );
   }

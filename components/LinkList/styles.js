@@ -14,6 +14,12 @@ const styles = EStyleSheet.create({
     marginTop: 5,
     color: '#888',
   },
+  '@media ios': {
+    loaderColor: '#CCC',
+  },
+  '@media android': {
+    loaderColor: '$primaryOrange',
+  },
 });
 
 export default styles;

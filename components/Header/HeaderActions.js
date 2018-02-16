@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Icon } from 'expo';
 import Touchable from 'react-native-platform-touchable';
 
@@ -12,14 +12,27 @@ const ButtonHitSlop = {
   right: 5,
 };
 
+const IconNames = {
+  ...Platform.select({
+    ios: {
+      create: 'ios-create-outline',
+    },
+    android: {
+      create: 'md-create',
+    },
+  }),
+};
+
 const HeaderActionsRight = props => (
   <View style={styles.container}>
     <Touchable
       hitSlop={ButtonHitSlop}
+      background={Touchable.Ripple('#555', true)}
+      style={styles.button}
       onPress={() => props.navigation.navigate('CreateLink')}
     >
       <Icon.Ionicons
-        name="ios-create-outline"
+        name={IconNames.create}
         style={{ color: '#FFF' }}
         size={20}
       />

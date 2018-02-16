@@ -6,12 +6,27 @@ const styles = EStyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 5,
   },
-  inputField: {
-    marginBottom: 5,
-    padding: 10,
-    borderColor: '#EEE',
-    borderWidth: 1,
+  '@media ios': {
+    inputField: {
+      padding: 15,
+      backgroundColor: '#FFF',
+      borderColor: '#EEE',
+      borderWidth: 1,
+    },
   },
+  '@media android': {
+    inputField: {
+      fontSize: 16,
+      paddingVertical: 10,
+      paddingHorizontal: 5,
+      marginHorizontal: 5,
+    },
+  },
+  lastInputField: {
+    borderTopWidth: 0,
+    marginBottom: 10,
+  },
+  $orange: '$primaryOrange',
 });
 
 export default styles;
