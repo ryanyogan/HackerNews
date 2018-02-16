@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, TextInput, Platform } from 'react-native';
+import { Button, View, Platform } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
