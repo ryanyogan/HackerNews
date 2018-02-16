@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, TextInput } from 'react-native';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import styles from './styles';
 
@@ -9,7 +11,12 @@ class CreateLink extends Component {
     url: '',
   };
 
-  _createLink = async () => {};
+  _createLink = async () =>
+    await this.props.createLinkMutation({
+      variables: {
+        ...this.state,
+      },
+    });
 
   render() {
     return (
@@ -41,4 +48,17 @@ class CreateLink extends Component {
   }
 }
 
-export default CreateLink;
+const CREATE_LINK_MUTATION = gql`
+  mutation CreateLinkMutation($description: String!, $url: String!) {
+    createLink(description: $description, url: $url) {
+      id
+      createdAt
+      url
+      description
+    }
+  }
+`;
+
+export default graphql(CREATE_LINK_MUTATION, {
+  name: 'createLinkMutation',
+})(CreateLink);
