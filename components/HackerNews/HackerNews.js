@@ -1,13 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
-import { LinkList } from '../LinkList';
-import { CreateLink } from '../CreateLink';
+import { View, StatusBar } from 'react-native';
+
+import RootStackNavigator from '../../config/routes';
 
 import styles from './styles';
 
 const HackerNews = () => (
   <View style={styles.container}>
-    <CreateLink />
+    <RootStackNavigator />
+    <StatusBar barStyle="light-content" />
   </View>
 );
 

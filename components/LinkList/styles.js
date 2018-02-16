@@ -8,6 +8,11 @@ const styles = EStyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 60,
+  },
+  loadingText: {
+    marginTop: 5,
+    color: '#888',
   },
 });
 

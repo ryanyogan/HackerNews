@@ -1,35 +1,45 @@
-import React from 'react';
-import { ScrollView, ActivityIndicator, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { FlatList, ActivityIndicator, Text, View } from 'react-native';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Link } from '../Link';
+import { HeaderActions } from '../Header';
 import styles from './styles';
 
-const LinkList = props => {
-  if (props.allLinksQuery && props.allLinksQuery.loading) {
+class LinkList extends Component {
+  static navigationOptions = props => ({
+    title: 'Hacker News',
+    headerRight: <HeaderActions.Right navigation={props.navigation} />,
+  });
+
+  render() {
+    if (this.props.allLinksQuery && this.props.allLinksQuery.loading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
+          <Text style={styles.loadingText}>Loading links...</Text>
+        </View>
+      );
+    }
+
+    if (this.props.allLinksQuery && this.props.allLinksQuery.error) {
+      return (
+        <View style={styles.container}>
+          <Text>Error</Text>
+        </View>
+      );
+    }
+
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator />
-      </View>
+      <FlatList
+        data={this.props.allLinksQuery.allLinks}
+        style={styles.container}
+        keyExtractor={link => link.id}
+        renderItem={({ item }) => <Link link={item} />}
+      />
     );
   }
-
-  if (props.allLinksQuery && props.allLinksQuery.error) {
-    return (
-      <View style={styles.container}>
-        <Text>Error</Text>
-      </View>
-    );
-  }
-
-  const linksToRender = props.allLinksQuery.allLinks;
-
-  return (
-    <ScrollView style={styles.container}>
-      {linksToRender.map(link => <Link key={link.id} link={link} />)}
-    </ScrollView>
-  );
-};
+}
 
 const ALL_LINKS_QUERY = gql`
   query AllLinksQuery {
