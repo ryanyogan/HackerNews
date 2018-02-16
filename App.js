@@ -1,4 +1,5 @@
 import React from 'react';
+import ESStyleSheet from 'react-native-extended-stylesheet';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -13,6 +14,8 @@ const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
 });
+
+ESStyleSheet.build({});
 
 const App = () => (
   <ApolloProvider client={client}>
