@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Platform, Button } from 'react-native';
+import { withUser, clearUser } from 'react-native-authentication-helpers';
 
 import HeaderIconButton from './HeaderIconButton';
 
@@ -7,17 +8,20 @@ import styles from './styles';
 
 const HeaderActionsRight = props => (
   <View style={styles.container}>
-    <HeaderIconButton
-      name="create"
-      onPress={() => props.navigation.navigate('CreateLink')}
-    />
-
-    {Platform.OS === 'android' && (
+    {props.user && (
       <HeaderIconButton
-        name="authenticate"
-        onPress={() => props.navigation.navigate('Authentication')}
+        name="create"
+        onPress={() => props.navigation.navigate('CreateLink')}
       />
     )}
+
+    {Platform.OS === 'android' &&
+      !props.user && (
+        <HeaderIconButton
+          name="authenticate"
+          onPress={() => props.navigation.navigate('Authentication')}
+        />
+      )}
   </View>
 );
 
@@ -28,16 +32,20 @@ const HeaderActionsLeft = props => {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Sign In"
-        color="#FFF"
-        onPress={() => props.navigation.navigate('Authentication')}
-      />
+      {props.user ? (
+        <Button title="Sign Out" color="#FFF" onPress={clearUser} />
+      ) : (
+        <Button
+          title="Sign In"
+          color="#FFF"
+          onPress={() => props.navigation.navigate('Authentication')}
+        />
+      )}
     </View>
   );
 };
 
 export default {
-  Right: HeaderActionsRight,
-  Left: HeaderActionsLeft,
+  Right: withUser(HeaderActionsRight),
+  Left: withUser(HeaderActionsLeft),
 };

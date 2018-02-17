@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, View, Platform } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { getUser } from 'react-native-authentication-helpers';
 
 import { StyledTextInput } from '../TextInput';
 
@@ -32,9 +33,16 @@ class CreateLink extends Component {
   }
 
   _createLink = async () => {
+    const user = getUser();
+    if (!user) {
+      console.error('No user logged in'); // eslint-disable-line
+      return;
+    }
+
     await this.props.createLinkMutation({
       variables: {
         ...this.state,
+        postedBy: user.id,
       },
     });
 
@@ -83,12 +91,20 @@ class CreateLink extends Component {
 }
 
 const CREATE_LINK_MUTATION = gql`
-  mutation CreateLinkMutation($description: String!, $url: String!) {
-    createLink(description: $description, url: $url) {
+  mutation CreateLinkMutation(
+    $description: String!
+    $url: String!
+    $postedById: ID!
+  ) {
+    createLink(description: $description, url: $url, postedById: $postedById) {
       id
       createdAt
       url
       description
+      postedBy {
+        id
+        name
+      }
     }
   }
 `;

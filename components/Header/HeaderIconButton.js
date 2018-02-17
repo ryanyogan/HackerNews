@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import Touchable from 'react-native-platform-touchable';
 import { Icon } from 'expo';
+import Touchable from 'react-native-platform-touchable';
 
 import styles from './styles';
 

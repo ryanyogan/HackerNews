@@ -52,6 +52,7 @@ class LinkList extends Component {
       return (
         <View style={styles.container}>
           <Text>Error</Text>
+          {console.error(this.props.allLinksQuery.error)}
         </View>
       );
     }
