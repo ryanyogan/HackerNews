@@ -6,6 +6,9 @@ const styles = EStyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 5,
   },
+  buttonContainer: {
+    marginHorizontal: 10,
+  },
 });
 
 export default styles;

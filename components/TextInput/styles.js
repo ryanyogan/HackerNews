@@ -19,7 +19,12 @@ const styles = EStyleSheet.create({
     },
   },
   lastInGroup: {
-    borderBottomWidth: 1,
+    '@media ios': {
+      borderBottomWidth: 1,
+    },
+    '@media android': {
+      borderBottomWidth: 0,
+    },
     marginBottom: 10,
   },
   $orange: '$primaryOrange',

@@ -10,6 +10,7 @@ const styles = EStyleSheet.create({
   button: {
     paddingVertical: 15,
     paddingHorizontal: 5,
+    marginLeft: 10,
   },
 });
 

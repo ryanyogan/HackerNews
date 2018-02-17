@@ -8,8 +8,8 @@ import { StyledTextInput } from '../TextInput';
 import styles from './styles';
 
 class CreateLink extends Component {
-  static navigationOptions = props => {
-    const { params } = props.navigation.state;
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
     const onDonePress = params ? params.onDonePress : () => {};
 
     return {
@@ -46,7 +46,11 @@ class CreateLink extends Component {
       return;
     }
 
-    return <Button color="#BBB" title="Submit" onPress={this._createLink} />;
+    return (
+      <View style={styles.buttonContainer}>
+        <Button color="#000" title="Submit" onPress={this._createLink} />;
+      </View>
+    );
   }
 
   render() {

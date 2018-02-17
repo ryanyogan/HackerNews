@@ -1,6 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 import { LinkList } from '../components/LinkList';
 import { CreateLink } from '../components/CreateLink';
+import { Authentication } from '../components/Authentication';
 
 export default StackNavigator(
   {
@@ -10,8 +11,12 @@ export default StackNavigator(
     CreateLink: {
       screen: CreateLink,
     },
+    Authentication: {
+      screen: Authentication,
+    },
   },
   {
+    initialRouteName: 'Links',
     cardStyle: {
       backgroundColor: '#FAFAFA',
     },

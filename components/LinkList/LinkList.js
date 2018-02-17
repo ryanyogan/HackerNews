@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, ActivityIndicator, Text, View } from 'react-native';
+import {
+  FlatList,
+  ActivityIndicator,
+  Text,
+  View,
+  Platform,
+} from 'react-native';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Link } from '../Link';
@@ -11,6 +17,11 @@ class LinkList extends Component {
   static navigationOptions = props => ({
     title: 'Hacker News',
     headerRight: <HeaderActions.Right navigation={props.navigation} />,
+    ...Platform.select({
+      ios: {
+        headerLeft: <HeaderActions.Left navigation={props.navigation} />,
+      },
+    }),
   });
 
   state = {
