@@ -42,7 +42,7 @@ class CreateLink extends Component {
     await this.props.createLinkMutation({
       variables: {
         ...this.state,
-        postedBy: user.id,
+        postedById: user.id,
       },
     });
 
